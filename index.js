@@ -14,19 +14,20 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
-  maxAge: 3600,
-  exposedHeaders: [
-    "Content-Length",
-    "X-Requested-With",
-    "X-HTTP-Method-Override",
-  ],
+  // maxAge: 3600,
+  // exposedHeaders: [
+  //   "Content-Length",
+  //   "X-Requested-With",
+  //   "X-HTTP-Method-Override",
+  // ],
+  preflightContinue: true,
 };
 
 // Apply CORS middleware to all routes
 app.use(cors(corsOptions));
 
 // Add this line to handle OPTIONS preflight requests
-app.options("*", cors());
+// app.options("*", cors());
 
 // Endpoint to handle requests for marketing strategies
 app.post("/api/generate-strategy", async (req, res) => {
