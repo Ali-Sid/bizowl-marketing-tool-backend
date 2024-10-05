@@ -21,6 +21,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Handle OPTIONS requests for CORS
+app.options('/api/generate-strategy', cors(corsOptions));
+
+
 // const corsOptions = {
 //   origin: '*', // Replace with your frontend URL
 //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
