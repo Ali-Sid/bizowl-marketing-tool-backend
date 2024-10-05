@@ -14,29 +14,11 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false, // This option is important
 };
 
 // Apply CORS middleware to all routes
 app.use(cors(corsOptions));
-
-// Custom CORS middleware
-const allowCrossDomain = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://www.bizzowl.com');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  
-  if (req.method === 'OPTIONS') {
-    // Preflight request. Reply successfully:
-    return res.status(200).json({});
-  }
-  next();
-};
-
-// Use the custom CORS middleware
-app.use(allowCrossDomain);
-
-// Handle OPTIONS requests for CORS
-app.options('*', cors(corsOptions));
 
 // Endpoint to handle requests for marketing strategies
 app.post("/api/generate-strategy", async (req, res) => {
