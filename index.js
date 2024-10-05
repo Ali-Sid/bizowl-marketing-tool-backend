@@ -10,11 +10,16 @@ app.use(express.json());
 
 // CORS configuration
 const corsOptions = {
-  origin: ['https://www.bizzowl.com'], // Allow only bizzowl.com
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: ["https://www.bizzowl.com"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  preflightContinue: false, // This option is important
+  allowedHeaders: ["Content-Type", "Authorization"],
+  maxAge: 3600,
+  exposedHeaders: [
+    "Content-Length",
+    "X-Requested-With",
+    "X-HTTP-Method-Override",
+  ],
 };
 
 // Apply CORS middleware to all routes
@@ -22,7 +27,8 @@ app.use(cors(corsOptions));
 
 // Endpoint to handle requests for marketing strategies
 app.post("/api/generate-strategy", async (req, res) => {
-  const { companyName, companyDesc, goals, targetAudience, channels } = req.body;
+  const { companyName, companyDesc, goals, targetAudience, channels } =
+    req.body;
 
   console.log(req.body, "req.body response....");
 
