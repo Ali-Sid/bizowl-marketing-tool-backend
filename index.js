@@ -10,16 +10,32 @@ app.use(express.json());
 
 // app.use(cors());
 
-const corsOptions = {
-  origin: 'https://www.bizzowl.com', // Allow only bizzowl.com
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-  allowedHeaders: '*',
-  preflightContinue: false,
-  optionsSuccessStatus: 200,
-};
+app.use(
+  cors({
+    origin: "https://www.bizzowl.com", // Adjust this to your needs, '*' allows all origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify the methods you want to allow
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify the headers you want to allow
+    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  })
+);
 
-app.use(cors(corsOptions));
+
+// Custom CORS middleware
+const allowCrossDomain = (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://www.bizzowl.com");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === 'OPTIONS') {
+     // Preflight request. Reply successfully:
+     return res.status(200).end();
+  }
+  next();
+ };
+ 
+ // Use the custom CORS middleware
+ app.use(allowCrossDomain);
+
+// app.use(cors(corsOptions));
 
 // Handle OPTIONS requests for CORS
 app.options('*', cors(corsOptions));
