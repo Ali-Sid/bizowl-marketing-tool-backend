@@ -21,6 +21,8 @@ const corsOptions = {
 // Apply CORS middleware to all routes
 app.use(cors(corsOptions));
 
+// Handle OPTIONS preflight requests
+app.options('*', cors());
 
 // Endpoint to handle requests for marketing strategies
 app.post("/api/generate-strategy", async (req, res) => {
