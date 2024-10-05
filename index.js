@@ -8,7 +8,16 @@ const PORT = process.env.PORT || 4000;
 // Middleware to parse JSON requests
 app.use(express.json());
 
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: 'https://www.bizzowl.com', // Allow only bizzowl.com
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  allowedHeaders: '*',
+};
+
+app.use(cors(corsOptions));
 
 // const corsOptions = {
 //   origin: '*', // Replace with your frontend URL
