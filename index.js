@@ -22,7 +22,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Handle OPTIONS requests for CORS
-app.options('/api/generate-strategy', cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 
 // const corsOptions = {
